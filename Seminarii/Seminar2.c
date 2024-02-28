@@ -66,13 +66,15 @@ struct Calculator* copiazaCalculatoareCuMultePorturi(struct Calculator* calculat
 
 struct Calculator PrimulCalculator(struct Calculator* calculator, int nrCalculatoare, float pret) {
 
-	int poz;
+	int poz = -1;
 	for (int i = 0; i < nrCalculatoare; i++) {
 		if (calculator[i].pret == pret) {
 			poz = i;
 			break;
 		}
 	}
+
+	if (poz == -1) exit(0);
 
 	struct Calculator c = initializare(calculator[poz].serie, calculator[poz].pret, calculator[poz].nrPorturi);
 
@@ -108,7 +110,7 @@ void main() {
 
 
 	int nrCalculatoarePorturi = 0;
-	struct Calculatoare* calculatoarePorturi = copiazaCalculatoareCuMultePorturi(calculatoare, nrCalculatoare, 3, &nrCalculatoarePorturi);
+	struct Calculator* calculatoarePorturi = copiazaCalculatoareCuMultePorturi(calculatoare, nrCalculatoare, 3, &nrCalculatoarePorturi);
 
 	printf("\n\n");
 	afisareVectorCalculatoare(calculatoarePorturi, nrCalculatoarePorturi);
