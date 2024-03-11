@@ -125,56 +125,28 @@ void adaugareTXT(Mamifer m, FILE* f, int* nr) {
 	++(*nr);
 }
 
-//INCERCARI CITIRE DIN FISIER INTR-UN VECTOR - EROARE--------------------------------
 
-//void citireTXT(Mamifer* m,char*numef,int* dim) {
-//
-//	FILE* f = fopen(numef, "r");
-//	if (!f) printf("Eroare la deschidere fisier");
-//	else {
-//		Mamifer mamifer;
-//		while (!feof(f)) {
-//			
-//			mamifer.specie = (char*)malloc(100 * sizeof(char));
-//			fgets(mamifer.specie, 100, f);
-//			mamifer.specie[strcspn(mamifer.specie, "\n")] = NULL;
-//
-//			fscanf(f, "%d", &mamifer.varstaMaxima);
-//			fscanf(f, "%.2f", &mamifer.greutateMedie);
-//			fscanf(f, "%ld", &mamifer.nrTotal);
-//
-//			adaugaMamiferVector(&m, dim, &mamifer);
-//			
-//			fgetc(f);//pentru \n din cadrul fisierului la finalul unui obiect
-//		}
-//
-//		fclose(f);
-//	}
-//}
+void citireTXT(Mamifer* mamifer, char* numef, int dim) {
 
-//void citireTXT(Mamifer* m, int* dim) {
-//	FILE* f = fopen("Elemente.txt", "r");
-//
-//	if (!f) printf("Eroare la deschidere");
-//	else {
-//		do {
-//			Mamifer mam;
-//			mam.specie = (char*)malloc(100 * sizeof(char));
-//			fscanf(f, "%[^\n]", mam.specie);
-//			fgetc(f);
-//			fscanf(f, "%d", &mam.varstaMaxima);
-//			fgetc(f);
-//			fscanf(f, "%.2f", &mam.greutateMedie);
-//			fgetc(f);
-//			fscanf(f, "%ld", &mam.nrTotal);
-//			fgetc(f);
-//			fgetc(f);
-//			(*dim)++; //dim=20?
-//		} while (!feof(f));
-//		fclose(f);
-//	}
-//}
-//-----------------------------------------------------------------------
+	FILE* f = fopen(numef, "r");
+	if (!f) printf("Eroare la deschidere fisier");
+	else {
+
+		for (int i = 0; i < dim; i++) {
+			mamifer[i].specie = (char*)malloc(100 * sizeof(char));
+			fscanf(f, " %[^\n]", mamifer[i].specie);
+
+			fscanf(f, "%d", &mamifer[i].varstaMaxima);
+			fscanf(f, "%f", &mamifer[i].greutateMedie);
+			fscanf(f, "%ld", &mamifer[i].nrTotal);
+
+			fgetc(f);//pentru \n din cadrul fisierului la finalul unui obiect
+		}
+
+		fclose(f);
+	}
+}
+
 
 void main() {
 	//Mamifere:----------------------------------------------------
@@ -285,12 +257,12 @@ void main() {
 	fclose(f);
 
 	printf("NrElementeFisier: %d", nrElemente);
-	//int dimVectorFisier = 0;
-	//Mamifer* vectorFisier = (Mamifer*)malloc(dimVectorFisier * sizeof(Mamifer));
-//	citireTXT(vectorFisier,&dimVectorFisier);
-//	printf("Dimensiune fisier: %d\n",dimVectorFisier);
-//	printf("------------ELEMENTE FISIER-----------------\n");
-//	printMamiferVector(vectorFisier, dimVectorFisier);
+	int dimVectorFisier = 10;
+	Mamifer* vectorFisier = (Mamifer*)malloc(dimVectorFisier * sizeof(Mamifer));
+	citireTXT(vectorFisier, numeFisierElemente, dimVectorFisier);
+	printf("Dimensiune fisier: %d\n", dimVectorFisier);
+	printf("------------ELEMENTE FISIER-----------------\n");
+	printMamiferVector(vectorFisier, dimVectorFisier);
 
 	//DEZALOCARI:-------------------------------------------------------
 	free(m1.specie);
